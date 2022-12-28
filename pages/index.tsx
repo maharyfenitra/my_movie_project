@@ -8,23 +8,29 @@ import Hero from '../components/Hero/Hero'
 import Grid from '../components/Grid/Grid'
 import Card from '../components/Card/Card'
 import Spinner from '../components/Spinner/Spinner'
-
+//Config 
+import { IMAGE_BASE_URL, BACKDROP_SIZE, POSTER_SIZE } from '../config'
 
 export default function Home() {
   const [query, setQuery] = React.useState("");
-  const {data,fetchNextPage,isLoading, isFetched,error} = useFetchMovies(query);
-  
+  const { data, fetchNextPage, isLoading, isFetched, error } = useFetchMovies(query);
+
   console.log(data)
-  
+
   return (
     <>
       <main className='relative h-screen overflow-y-scroll'>
-        <Header setQuery={setQuery}/>
-        <Hero/>
-        <Grid/>
-        <Card/>
-        <Spinner/>
+        <Header setQuery={setQuery} />
+        {!query && data && data.pages ?
+          <Hero imgUrl={data?.pages[0]?.results[0]?.backdrop_path ? IMAGE_BASE_URL + BACKDROP_SIZE + data?.pages[0]?.results[0]?.backdrop_path : '/no_image.jpg'}
+            title={data?.pages[0]?.results[0]?.title}
+            text={data?.pages[0]?.results[0]?.overview}
+          /> : ''
+        }
+        <Grid />
+        <Card />
+        <Spinner />
       </main>
-      </>
+    </>
   )
 }
