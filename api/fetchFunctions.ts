@@ -1,6 +1,7 @@
 import { Movies } from "./types";
 
 export const basicFetch = async <returnType>(endpoint: string): Promise<returnType> => {
+
     const response = await fetch(endpoint);
     if(!response.ok){
         throw new Error("Error fetching data!")
