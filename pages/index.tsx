@@ -15,11 +15,17 @@ export default function Home() {
   const [query, setQuery] = React.useState("");
   const { data, fetchNextPage, isLoading, isFetched, error } = useFetchMovies(query);
 
-  //console.log(data)
+   
+
+  const handleScroll = (e: React.UIEvent<HTMLElement>) =>{
+    const { scrollTop, clientHeight, scrollHeight} = e.currentTarget;
+    if(scrollHeight - scrollTop === clientHeight)
+      fetchNextPage();
+  }
 
   return (
     <>
-      <main className='relative h-screen overflow-y-scroll'>
+      <main className='relative h-screen overflow-y-scroll' onScroll={handleScroll}>
         <Header setQuery={setQuery} />
         {!query && data && data.pages ?
           <Hero imgUrl={data?.pages[0]?.results[0]?.backdrop_path ? IMAGE_BASE_URL + BACKDROP_SIZE + data?.pages[0]?.results[0]?.backdrop_path : '/no_image.jpg'}
@@ -32,7 +38,7 @@ export default function Home() {
           title={movie.original_title}
           /></div>)):''}
         </Grid>
-        <Spinner />
+        {(isLoading || isFetched) && <Spinner />}
       </main>
     </>
   )
