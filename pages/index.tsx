@@ -15,7 +15,7 @@ export default function Home() {
   const [query, setQuery] = React.useState("");
   const { data, fetchNextPage, isLoading, isFetched, error } = useFetchMovies(query);
 
-  console.log(data)
+  //console.log(data)
 
   return (
     <>
