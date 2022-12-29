@@ -9,14 +9,23 @@ import MovieInfo from '../components/MovieInfo/MovieInfo'
 import Grid from '../components/Grid/Grid'
 import Card from '../components/Card/Card'
 //types
-import type { GetStaticPaths, GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import type { Movie, Credits, Crew, Cast } from '../api/types'
 
 const Movie: NextPage<Props> = ({ movie, cast, directors }) => {
     return <main>
         <Header />
         <Breadcrumb title={movie.original_title}/>
-        <MovieInfo />
+        <MovieInfo thumbUrl={movie.poster_path ? IMAGE_BASE_URL + POSTER_SIZE + movie.poster_path : '/no_image.jpg'}
+        rating={movie.vote_average}
+        title={movie.original_title}
+        year={movie.release_date.split('-')[0]}
+        backGroundImgUrl={movie.backdrop_path ? IMAGE_BASE_URL + BACKDROP_SIZE + movie.backdrop_path : '/no_image.jpg'} 
+        summary={movie.overview} 
+        directors={directors} 
+        time={movie.runtime} 
+        budget={movie.budget} 
+        revenue={movie.revenue}        />
         <Grid>
             <Card />
         </Grid>
